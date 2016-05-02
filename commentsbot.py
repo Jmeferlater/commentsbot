@@ -18,7 +18,6 @@ alreadyDone = set()
 
 def comment():
     print("searching")
-    lis =[]
     try:
         all_comments = subreddit.get_comments(limit=100)
         # for every comment in all_comments
