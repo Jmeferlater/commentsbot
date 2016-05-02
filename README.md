@@ -7,8 +7,8 @@ The bot will then go to the given user's comment history and count every comment
 
 an example of a call to the bot is:
 
-!Comments user word
+"!Comments USER WORD"
 
 an example of the bot's reply is:
 
-25% of this person's comments includeded the word 'word'
+"25% of this person's comments included the word WORD"
