@@ -1,10 +1,9 @@
-
-
 import praw
 import os
 import time
 from config_bot import *
 
+# checks if there is a config file with a username and password
 if not os.path.isfile("config_bot.py"):
     print("You must create a config file with your username and password.")
     exit(1)
@@ -16,21 +15,28 @@ subreddit = r.get_subreddit('all')
 keyword = "!comments"
 alreadyDone = set()
 
+
 def comment():
     print("searching")
     lis =[]
     try:
         all_comments = subreddit.get_comments(limit=100)
+        # for every comment in all_comments
         for comment in all_comments:
             commentbody = comment.body.lower()
+            # check if the keyword is in the comment and if the comment has not already been checked
             if (keyword in commentbody) and (comment.id not in alreadyDone):
                 alreadyDone.add(comment.id)
+                # splits the commentbody after the !comments command once
                 arguments = commentbody.split("!comments", 1)
                 print(arguments)
+                # splits the given user and word, adding each separately into a list
                 commands = arguments[1].split()
                 print(commands)
+                # gets the given redditor and his/her comments
                 redditor = r.get_redditor(commands[0])
                 comments = redditor.get_comments()
+                # stores the given word
                 inputstring = " " + commands[1] + " "
                 print(inputstring)
                 comment.reply(reply_to_comment(comments, inputstring))
@@ -53,8 +59,11 @@ print("searching for keywords")
 
 while True:
     comment()
+    # wait 2 seconds before checking the next set of comments
+    # allows for 1 request every 2 seconds, as per the guidelines
     print("Sleeping...")
-    time.sleep(30)
+    time.sleep(2)
     print("Starting...")
+
 
 
